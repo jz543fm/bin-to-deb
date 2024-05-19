@@ -1,0 +1,40 @@
+stages:
+  - jammy_build
+
+jammy_build:
+  extends: .build
+  variables:
+    BIN: 'xxx'
+    MAINTAINER: 'Jason Statham <j.s@hollywood>'
+    ARCH: 'all'
+    RELEASE: '1.0.0'
+    DESCRIPTION: 'description text'
+
+.build:
+  image: <your_image>
+  stage: jammy_build
+  script:
+      #DEBUGGER
+      #BIN="xxx" &&
+      #MAINTAINER='Jason Statham <j.s@hollywood>' &&
+      #ARCH='all' &&
+      #RELEASE='1.0.0'
+      #DESCRIPTION='description text'
+    - >
+      mkdir ~/${BIN}_${VERSION}/ &&
+      mkdir -p ~/${BIN}_${VERSION}/usr/local/bin &&
+      cd ~/${BIN}_${VERSION}/usr/local/bin &&
+      wget <URL>/${RELEASE}.tar.gz 
+      tar -xvf ${RELEASE}.tar.gz && rm -rf ${RELEASE}.tar.gz &&
+      cd ${BIN_RELEASE}/ && make binary && make install && cp cmd/xxx ~/${BIN}_${VERSION}/usr/local/bin && rm -rf ${BIN_RELEASE}/ &&
+      cd ~/${BIN}_${VERSION}/ && mkdir -p DEBIAN && cd DEBIAN/ &&
+      echo "Package: $BIN" > control &&
+      echo "Version: $VERSION" >> control &&
+      echo "Architecture: $ARCH" >> control &&
+      echo "Maintainer: $MAINTAINER" >> control &&
+      echo "Description: $DESCRIPTION" >> control &&
+      dpkg-deb --build --root-owner-group ~/${BIN}_${VERSION}
+  artifacts:
+    paths:
+      - ./$BIN_$VERSION.deb
+    expire_in: 1 week
