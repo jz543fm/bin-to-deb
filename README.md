@@ -51,11 +51,13 @@ then you need also `postinst` script that should contain just `systemctl daemon-
             └── xxx #executable with right permission, do not forget to check it!
 ```
 
-## Install and remove package
+## Verify
 
 ```bash
-#install
+#install package
 dpkg -i <package>.deb
+#check where is executable/binary installed
+which <name>
 #uninstall
 dpkg -r <package>
 ```
