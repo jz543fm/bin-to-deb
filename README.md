@@ -30,7 +30,7 @@ make
 Update your `.gitlab-ci.yaml` and update lines `27-29` with steps how to install your executable/binary from source, then fix `Dockerfile` with dependencies that you need to build your executable/binary and try to build it from pipeline, .deb package can be downloaded then as a artifact
 
 
-#### How to create a system service for .deb package
+## How to create a system service for .deb package
 
 You need to add `/lib/systemd/system/x.service` that will contain systemd config for your xxx.service
 then you need also `postinst` script that should contain just `systemctl daemon-reload, systemctl start xxx.service`, if you want to enable to start service after boot, add also after daemon-reload, `systemctl enable xxx.service`
