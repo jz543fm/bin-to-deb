@@ -1,0 +1,5 @@
+Package: xxx
+Version: 1.0.0
+Architecture: all
+Maintainer: 'Jason Statham <j.s@hollywood>'
+Description: description text
